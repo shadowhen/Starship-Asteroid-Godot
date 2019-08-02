@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Asteroid.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Asteroids/asteroid_01.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Asteroids/asteroid_02.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "asteroid",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 15.0
+
+[node name="Asteroid" type="RigidBody2D" groups=[
+"Enemies",
+"Asteroids",
+]]
+position = Vector2( 511, 204 )
+z_index = -2
+collision_layer = 2
+collision_mask = 15
+gravity_scale = 0.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+scale_range = Vector2( 1, 2 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "asteroid"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 60.0
+[connection signal="body_entered" from="." to="." method="_on_Asteroid_body_entered"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_Lifetime_timeout"]

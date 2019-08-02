@@ -1,0 +1,253 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
+[ext_resource path="res://User Interface/UserInterface.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Fonts/FFFFORWA.TTF" type="DynamicFontData" id=3]
+[ext_resource path="res://Scenes/Options.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/EnemySpawner.gd" type="Script" id=6]
+[ext_resource path="res://Enemies/Asteroid.tscn" type="PackedScene" id=7]
+[ext_resource path="res://AudioManager.tscn" type="PackedScene" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 24
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 24
+font_data = ExtResource( 3 )
+
+[sub_resource type="Curve2D" id=4]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1023, 0, 0, 0, 0, 0, 1023, 600, 0, 0, 0, 0, 0, 600, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 600, 400 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 512, 10 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 10, 300 )
+
+[node name="Game" type="Node"]
+pause_mode = 2
+script = ExtResource( 1 )
+
+[node name="UI" parent="." instance=ExtResource( 2 )]
+
+[node name="GameOver" type="Control" parent="."]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="GameOver"]
+anchor_right = 1.0
+margin_bottom = 187.0
+custom_fonts/font = SubResource( 1 )
+text = "GAME OVER"
+align = 1
+valign = 1
+
+[node name="ScoreContainer" type="HSplitContainer" parent="GameOver"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -173.5
+margin_top = -162.0
+margin_right = 173.5
+margin_bottom = -122.0
+
+[node name="Label" type="Label" parent="GameOver/ScoreContainer"]
+margin_top = 3.0
+margin_right = 99.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 2 )
+text = "Score:"
+align = 1
+
+[node name="Score" type="Label" parent="GameOver/ScoreContainer"]
+margin_left = 111.0
+margin_top = 3.0
+margin_right = 347.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 2 )
+text = "0000000000"
+align = 1
+
+[node name="Container" type="VBoxContainer" parent="GameOver"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -161.0
+margin_top = 201.0
+margin_right = 161.0
+margin_bottom = -96.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOver/Container"]
+margin_right = 322.0
+margin_bottom = 87.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+text = "Restart"
+
+[node name="OpitionsButton" type="Button" parent="GameOver/Container"]
+margin_top = 107.0
+margin_right = 322.0
+margin_bottom = 194.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+text = "Opitions"
+
+[node name="ReturnButton" type="Button" parent="GameOver/Container"]
+margin_top = 214.0
+margin_right = 322.0
+margin_bottom = 303.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+text = "Return To Menu"
+
+[node name="GameMenu" type="Control" parent="."]
+pause_mode = 2
+editor/display_folded = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="GameMenu"]
+anchor_right = 1.0
+margin_bottom = 187.0
+custom_fonts/font = SubResource( 1 )
+text = "PAUSED"
+align = 1
+valign = 1
+
+[node name="Container" type="VBoxContainer" parent="GameMenu"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -161.0
+margin_top = 201.0
+margin_right = 161.0
+margin_bottom = -96.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="GameMenu/Container"]
+margin_right = 322.0
+margin_bottom = 87.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+text = "Resume"
+
+[node name="OpitionsButton" type="Button" parent="GameMenu/Container"]
+margin_top = 107.0
+margin_right = 322.0
+margin_bottom = 194.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+text = "Opitions"
+
+[node name="ReturnButton" type="Button" parent="GameMenu/Container"]
+margin_top = 214.0
+margin_right = 322.0
+margin_bottom = 303.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+text = "Return To Menu"
+
+[node name="Options" parent="." instance=ExtResource( 4 )]
+pause_mode = 2
+editor/display_folded = true
+visible = false
+go_to_return_scene = false
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 300 )
+z_index = -1
+
+[node name="SpawnPath" type="Path2D" parent="."]
+editor/display_folded = true
+curve = SubResource( 4 )
+script = ExtResource( 6 )
+enemy = ExtResource( 7 )
+enemy_speed_range = Vector2( 100, 250 )
+max_number_of_enemies = 3
+
+[node name="SpawnPathFollow" type="PathFollow2D" parent="SpawnPath"]
+rotate = false
+
+[node name="SpawnTime" type="Timer" parent="SpawnPath"]
+wait_time = 5.0
+
+[node name="Zone" type="Area2D" parent="."]
+editor/display_folded = true
+position = Vector2( 512, 300 )
+collision_layer = 4
+collision_mask = 10
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zone"]
+shape = SubResource( 5 )
+
+[node name="Walls" type="Node2D" parent="."]
+editor/display_folded = true
+
+[node name="Top" type="StaticBody2D" parent="Walls"]
+editor/display_folded = true
+position = Vector2( 512, 0 )
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top"]
+shape = SubResource( 6 )
+
+[node name="Bottom" type="StaticBody2D" parent="Walls"]
+editor/display_folded = true
+position = Vector2( 512, 600 )
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Bottom"]
+shape = SubResource( 6 )
+
+[node name="Left" type="StaticBody2D" parent="Walls"]
+editor/display_folded = true
+position = Vector2( 0, 300 )
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left"]
+shape = SubResource( 7 )
+
+[node name="Right" type="StaticBody2D" parent="Walls"]
+editor/display_folded = true
+position = Vector2( 1024, 300 )
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right"]
+shape = SubResource( 7 )
+
+[node name="AudioManager" parent="." instance=ExtResource( 8 )]
+pause_mode = 2
+[connection signal="pressed" from="GameOver/Container/RestartButton" to="." method="_on_RestartButton_pressed"]
+[connection signal="pressed" from="GameOver/Container/OpitionsButton" to="." method="open_options"]
+[connection signal="pressed" from="GameOver/Container/ReturnButton" to="." method="_return_to_main_menu"]
+[connection signal="pressed" from="GameMenu/Container/ResumeButton" to="." method="close_game_menu"]
+[connection signal="pressed" from="GameMenu/Container/OpitionsButton" to="." method="open_options"]
+[connection signal="pressed" from="GameMenu/Container/ReturnButton" to="." method="_return_to_main_menu"]
+[connection signal="pressed" from="Options/SettingsContainer/ReturnButton" to="." method="close_options"]
+[connection signal="timeout" from="SpawnPath/SpawnTime" to="SpawnPath" method="_on_SpawnTime_timeout"]
+[connection signal="area_exited" from="Zone" to="." method="_on_Zone_area_exited"]
+[connection signal="body_exited" from="Zone" to="." method="_on_Zone_body_exited"]
+
+[editable path="Options"]

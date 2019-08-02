@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Options.gd" type="Script" id=1]
+[ext_resource path="res://default_bus_layout.tres" type="AudioBusLayout" id=2]
+[ext_resource path="res://Fonts/FFFFORWA.TTF" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 24
+font_data = ExtResource( 3 )
+
+[node name="Opitions" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -515.269, 35.8033 )
+script = ExtResource( 1 )
+audio_bus_layout = ExtResource( 2 )
+
+[node name="Title" type="Label" parent="."]
+anchor_right = 1.0
+margin_bottom = 134.0
+custom_fonts/font = SubResource( 1 )
+text = "Options"
+align = 1
+valign = 1
+
+[node name="SettingsContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -220.0
+margin_top = 134.0
+margin_right = 220.0
+margin_bottom = -78.0
+custom_constants/separation = 30
+alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="SettingsContainer"]
+margin_top = 94.0
+margin_right = 440.0
+margin_bottom = 135.0
+custom_fonts/font = SubResource( 2 )
+text = "Full Screen"
+
+[node name="VolumeContainer" type="VBoxContainer" parent="SettingsContainer"]
+margin_top = 165.0
+margin_right = 440.0
+margin_bottom = 224.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="SettingsContainer/VolumeContainer"]
+margin_right = 440.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 2 )
+text = "Volume"
+
+[node name="HSlider" type="HSlider" parent="SettingsContainer/VolumeContainer"]
+margin_top = 43.0
+margin_right = 440.0
+margin_bottom = 59.0
+min_value = -80.0
+max_value = 0.0
+ticks_on_borders = true
+
+[node name="ReturnButton" type="Button" parent="SettingsContainer"]
+margin_top = 254.0
+margin_right = 440.0
+margin_bottom = 293.0
+custom_fonts/font = SubResource( 2 )
+text = "Return to Menu"
+[connection signal="toggled" from="SettingsContainer/CheckBox" to="." method="_on_FullscreenBox_toggled"]
+[connection signal="value_changed" from="SettingsContainer/VolumeContainer/HSlider" to="." method="_on_VolumeSlider_value_changed"]
+[connection signal="pressed" from="SettingsContainer/ReturnButton" to="." method="_on_ReturnButton_pressed"]
