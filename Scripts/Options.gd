@@ -13,7 +13,7 @@ export (bool) var go_to_return_scene = true
 var _config_file = ConfigFile.new()
 var _settings = {
 	"Settings" : {
-		"Volume" : 0,
+		"Volume" : -10,
 		"Fullscreen" : false
 	}
 }
@@ -62,3 +62,7 @@ func _on_ReturnButton_pressed():
 	save_settings()
 	if go_to_return_scene:
 		get_tree().change_scene_to(main_menu_scene)
+
+
+func _on_TestAudioButton_pressed():
+	$TestAudio.play()

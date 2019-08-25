@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/FFFFORWA.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://User Interface/ControlsHelp.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -55,6 +56,8 @@ margin_bottom = 362.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 2 )
 text = "Quit"
+
+[node name="Help" parent="." instance=ExtResource( 3 )]
 [connection signal="pressed" from="ButtonContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="ButtonContainer/OpitionsButton" to="." method="_on_OpitionsButton_pressed"]
 [connection signal="pressed" from="ButtonContainer/QuitButton" to="." method="_on_QuitButton_pressed"]

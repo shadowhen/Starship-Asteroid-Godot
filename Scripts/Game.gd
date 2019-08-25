@@ -20,9 +20,11 @@ func _ready():
 	randomize()
 	$UI.update_score(score)
 	player.connect("die", self, "game_over")
-	player.connect("shoot", ui, "play_weapon_cooldown")
 	player.connect("shoot", audio_manager, "play", ["LaserAudio"])
 	player.connect("damage", audio_manager, "play", ["StarshipDamage"])
+	
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+
 
 func _unhandled_key_input(event):
 	if event.is_action_pressed("pause_game"):
@@ -38,15 +40,19 @@ func _unhandled_key_input(event):
 func open_game_menu():
 	get_tree().paused = true
 	$GameMenu.show()
+	ui.hide()
 	current_state = STATE_PAUSE
 	enemy_spawner.timer.paused = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func close_game_menu():
 	get_tree().paused = false
 	$GameMenu.hide()
+	ui.show()
 	current_state = STATE_PLAY
 	enemy_spawner.timer.paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 
 func open_options():
@@ -82,8 +88,7 @@ func game_over():
 	ui.hide()
 	$GameOver.show()
 	$GameOver/ScoreContainer/Score.text = str(score).pad_zeros(10)
-	
-	print($GameMenu)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	current_state = STATE_GAME_OVER
 	
 	get_tree().paused = true
